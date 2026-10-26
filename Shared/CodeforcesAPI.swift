@@ -44,7 +44,7 @@ struct CodeforcesAPI: Sendable {
         configuration.timeoutIntervalForRequest = 20
         configuration.timeoutIntervalForResource = 75
         configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
-        configuration.httpAdditionalHeaders = ["User-Agent": "CFWidget/1.0 (iOS)"]
+        configuration.httpAdditionalHeaders = ["User-Agent": "Homejudge/1.0 (iOS)"]
         self.session = URLSession(configuration: configuration)
     }
 

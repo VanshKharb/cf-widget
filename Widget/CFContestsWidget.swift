@@ -9,10 +9,10 @@ struct CFContestsWidget: Widget {
         AppIntentConfiguration(kind: WidgetKind.contests, intent: HandleIntent.self, provider: CFProvider()) { entry in
             CFContestsWidgetView(entry: entry)
                 .containerBackground(for: .widget) {
-                    CFWidgetBackground(accent: Self.accent)
+                    WidgetBackground(accent: Self.accent)
                 }
         }
-        .configurationDisplayName("Upcoming Contests")
+        .configurationDisplayName("Contests")
         .description("The next Codeforces rounds with a live countdown.")
         .supportedFamilies([.systemSmall, .systemMedium])
     }

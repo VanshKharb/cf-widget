@@ -6,10 +6,10 @@ struct CFStatsWidget: Widget {
         AppIntentConfiguration(kind: WidgetKind.stats, intent: HandleIntent.self, provider: CFProvider()) { entry in
             CFStatsWidgetView(entry: entry)
                 .containerBackground(for: .widget) {
-                    CFWidgetBackground(accent: RankStyle.color(for: entry.snapshot?.rank))
+                    WidgetBackground(accent: RankStyle.color(for: entry.snapshot?.rank))
                 }
         }
-        .configurationDisplayName("Codeforces Stats")
+        .configurationDisplayName("Stats")
         .description("Rating, rank, solved count and your latest contest result.")
         .supportedFamilies([
             .systemSmall,

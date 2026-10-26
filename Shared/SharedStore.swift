@@ -14,7 +14,7 @@ enum AppDefaults {
     }
 
     /// Used by the standalone test harness, which has no app bundle.
-    static let fallbackAppGroupID = "group.com.vanshkharb.cfwidget"
+    static let fallbackAppGroupID = "group.com.vanshkharb.homejudge"
 }
 
 /// The bridge between the app and the widget extension.

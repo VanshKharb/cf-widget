@@ -6,10 +6,10 @@ struct CFHeatmapWidget: Widget {
         AppIntentConfiguration(kind: WidgetKind.heatmap, intent: HandleIntent.self, provider: CFProvider()) { entry in
             CFHeatmapWidgetView(entry: entry)
                 .containerBackground(for: .widget) {
-                    CFWidgetBackground(accent: .green)
+                    WidgetBackground(accent: .green)
                 }
         }
-        .configurationDisplayName("Submission Heatmap")
+        .configurationDisplayName("Heatmap")
         .description("Your Codeforces submission activity, GitHub style.")
         .supportedFamilies([.systemMedium, .systemLarge])
     }

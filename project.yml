@@ -1,4 +1,4 @@
-name: CFWidget
+name: Homejudge
 
 options:
   bundleIdPrefix: com.vanshkharb
@@ -27,7 +27,7 @@ targets:
   # The app. Owns the expensive scraping (up to 10k submissions) and writes the
   # result into the shared App Group so the widget never has to do it.
   # ---------------------------------------------------------------------------
-  CFWidget:
+  Homejudge:
     type: application
     platform: iOS
     sources:
@@ -39,16 +39,16 @@ targets:
       Release: Config/Identity.xcconfig
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_PREFIX).cfwidget
-        PRODUCT_NAME: CFWidget
+        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_PREFIX).homejudge
+        PRODUCT_NAME: Homejudge
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         TARGETED_DEVICE_FAMILY: "1,2"
         SUPPORTS_MACCATALYST: NO
     info:
-      path: Config/CFWidget-Info.plist
+      path: Config/Homejudge-Info.plist
       properties:
-        CFBundleDisplayName: CF Widget
+        CFBundleDisplayName: Homejudge
         UILaunchScreen: {}
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
@@ -62,17 +62,17 @@ targets:
         # Read at runtime by SharedStore, so the Swift code needs no hardcoded ID.
         AppGroupID: $(APP_GROUP)
     entitlements:
-      path: Config/CFWidget.entitlements
+      path: Config/Homejudge.entitlements
       properties:
         com.apple.security.application-groups:
           - $(APP_GROUP)
     dependencies:
-      - target: CFWidgetExtension
+      - target: HomejudgeExtension
 
   # ---------------------------------------------------------------------------
   # The widget extension. Three widgets share one timeline provider.
   # ---------------------------------------------------------------------------
-  CFWidgetExtension:
+  HomejudgeExtension:
     type: app-extension
     platform: iOS
     sources:
@@ -83,29 +83,29 @@ targets:
       Release: Config/Identity.xcconfig
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_PREFIX).cfwidget.widget
-        PRODUCT_NAME: CFWidgetExtension
+        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_PREFIX).homejudge.widget
+        PRODUCT_NAME: HomejudgeExtension
         APPLICATION_EXTENSION_API_ONLY: YES
         TARGETED_DEVICE_FAMILY: "1,2"
         SKIP_INSTALL: YES
     info:
-      path: Config/CFWidgetExtension-Info.plist
+      path: Config/HomejudgeExtension-Info.plist
       properties:
-        CFBundleDisplayName: CF Widget
+        CFBundleDisplayName: Homejudge
         AppGroupID: $(APP_GROUP)
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
     entitlements:
-      path: Config/CFWidgetExtension.entitlements
+      path: Config/HomejudgeExtension.entitlements
       properties:
         com.apple.security.application-groups:
           - $(APP_GROUP)
 
 schemes:
-  CFWidget:
+  Homejudge:
     build:
       targets:
-        CFWidget: all
+        Homejudge: all
     run:
       config: Debug
     archive:

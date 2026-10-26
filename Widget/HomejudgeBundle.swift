@@ -2,7 +2,7 @@ import SwiftUI
 import WidgetKit
 
 @main
-struct CFWidgetBundle: WidgetBundle {
+struct HomejudgeBundle: WidgetBundle {
     var body: some Widget {
         CFStatsWidget()
         CFHeatmapWidget()

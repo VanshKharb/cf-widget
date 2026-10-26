@@ -36,7 +36,7 @@ struct DashboardView: View {
                 .padding(16)
             }
             .background(Color(uiColor: .systemGroupedBackground))
-            .navigationTitle("CF Widget")
+            .navigationTitle("Homejudge")
             .refreshable { await model.refresh() }
             .task { await model.refreshIfStale() }
         }
@@ -327,7 +327,7 @@ struct DashboardView: View {
         Card(title: "Put it on your Home Screen") {
             VStack(alignment: .leading, spacing: 6) {
                 hintRow(1, "Touch and hold an empty spot on your Home Screen.")
-                hintRow(2, "Tap Edit, then Add Widget, and search for CF Widget.")
+                hintRow(2, "Tap Edit, then Add Widget, and search for Homejudge.")
                 hintRow(3, "Choose Stats, Heatmap or Upcoming Contests.")
             }
             Text("Each widget can point at a different handle — edit it after placing it.")

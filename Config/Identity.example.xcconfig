@@ -10,4 +10,4 @@
 
 DEVELOPMENT_TEAM = ABCDE12345
 BUNDLE_PREFIX = com.yourname
-APP_GROUP = group.com.yourname.cfwidget
+APP_GROUP = group.com.yourname.homejudge

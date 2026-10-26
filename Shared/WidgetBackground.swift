@@ -2,7 +2,7 @@ import SwiftUI
 
 /// Shared widget backdrop: the system background with a soft rank-coloured glow
 /// in the corner, so all three widgets look like one product.
-struct CFWidgetBackground: View {
+struct WidgetBackground: View {
     var accent: Color
 
     @Environment(\.colorScheme) private var colorScheme

@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct CFWidgetApp: App {
+struct HomejudgeApp: App {
     @State private var model = AppModel()
 
     var body: some Scene {

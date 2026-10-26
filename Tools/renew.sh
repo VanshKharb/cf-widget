@@ -16,7 +16,7 @@ if [[ ! -f Config/Identity.xcconfig ]]; then
 fi
 
 PREFIX="$(awk -F'=' '/^BUNDLE_PREFIX/ {gsub(/[[:space:]]/, "", $2); print $2}' Config/Identity.xcconfig)"
-BUNDLE_ID="${PREFIX}.cfwidget"
+BUNDLE_ID="${PREFIX}.homejudge"
 
 UDID="${DEVICE_UDID:-}"
 if [[ -z "$UDID" ]]; then
@@ -40,9 +40,9 @@ echo
 echo "Keep the iPhone unlocked and awake during this."
 echo
 
-xcodebuild -quiet -scheme CFWidget -destination "id=$UDID" -allowProvisioningUpdates build
+xcodebuild -quiet -scheme Homejudge -destination "id=$UDID" -allowProvisioningUpdates build
 
-APP="$(xcodebuild -scheme CFWidget -destination "id=$UDID" -showBuildSettings 2>/dev/null \
+APP="$(xcodebuild -scheme Homejudge -destination "id=$UDID" -showBuildSettings 2>/dev/null \
   | awk '/ BUILT_PRODUCTS_DIR =/ {d=$3} / FULL_PRODUCT_NAME =/ {n=$3} END {print d "/" n}')"
 
 if [[ ! -d "$APP" ]]; then
