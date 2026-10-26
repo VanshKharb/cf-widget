@@ -1,13 +1,16 @@
 import Foundation
 
 extension StatsSnapshot {
-    /// Deterministic fake data so widget previews, placeholders and Xcode
-    /// previews look like a real, busy account.
+    /// Deterministic fake data for widget placeholders and previews.
+    ///
+    /// Everything here is internally consistent on purpose: the rating, the peak
+    /// and the rank title all sit inside the same Codeforces band, so a real
+    /// competitor looking at a screenshot won't spot that it's sample data.
     static var sample: StatsSnapshot {
         let now = Date()
         let calendar = Calendar.codeforcesUTC
 
-        // A small LCG: same picture every time, no `random()` in previews.
+        // A small LCG, so the preview picture never changes between builds.
         var seed: UInt64 = 0x9E3779B97F4A7C15
         func next(_ bound: Int) -> Int {
             seed = seed &* 6_364_136_223_846_793_005 &+ 1_442_695_040_888_963_407
@@ -15,28 +18,33 @@ extension StatsSnapshot {
         }
 
         var counts: [String: Int] = [:]
-        for offset in 0..<200 {
+        for offset in 0..<190 {
             guard let date = calendar.date(byAdding: .day, value: -offset, to: now) else { continue }
-            let roll = next(10)
-            // Weekends are busier, mirroring how contests are scheduled.
             let weekday = calendar.component(.weekday, from: date)
-            let busy = weekday == 1 || weekday == 7
-            let value = roll > (busy ? 3 : 6) ? next(9) + 1 : 0
+            let weekend = weekday == 1 || weekday == 7
+            let roll = next(10)
+            let value = roll > (weekend ? 4 : 6) ? next(8) + 1 : 0
             if value > 0 { counts[DayKey.string(from: date)] = value }
         }
 
+        // A believable climb ending at 1804, peaking at 1868. Both are inside the
+        // Expert band (1600–1899), which is what `rank` and `maxRank` say.
+        let ratings = [
+            1441, 1478, 1452, 1509, 1562, 1540, 1597, 1643, 1618, 1672,
+            1711, 1689, 1738, 1776, 1754, 1801, 1846, 1822, 1868, 1841,
+            1793, 1834, 1779, 1804,
+        ]
+
         var history: [RatingPoint] = []
-        var rating = 1_180
-        for index in 0..<24 {
-            rating += next(90) - 35
-            guard let date = calendar.date(byAdding: .day, value: -((24 - index) * 21), to: now) else { continue }
+        for (index, rating) in ratings.enumerated() {
+            guard let date = calendar.date(byAdding: .day, value: -((ratings.count - index) * 19), to: now) else { continue }
             history.append(
                 RatingPoint(
-                    contestId: 1_800 + index,
+                    contestId: 2_200 + index,
                     date: date,
                     rating: rating,
-                    contestName: "Codeforces Round \(900 + index) (Div. 2)",
-                    rank: next(4_000) + 200
+                    contestName: "Codeforces Round \(1_100 + index) (Div. 2)",
+                    rank: 1_412 - index * 14
                 )
             )
         }
@@ -44,21 +52,21 @@ extension StatsSnapshot {
         let last = history.last!
 
         return StatsSnapshot(
-            handle: "vansh",
-            displayName: "Vansh Kharb",
+            handle: "daily_cp",
+            displayName: "Daily CP",
             avatarURL: nil,
             country: "India",
-            organization: "IIIT",
+            organization: nil,
             rating: last.rating,
-            maxRating: history.map(\.rating).max(),
+            maxRating: ratings.max(),
             rank: "expert",
-            maxRank: "candidate master",
+            maxRank: "expert",
             contribution: 12,
             friendOfCount: 34,
             solvedCount: 438,
             acceptedSubmissions: 612,
             scannedSubmissions: 1_204,
-            ratedContestCount: 47,
+            ratedContestCount: ratings.count,
             isPartialScan: false,
             heatmapCounts: counts,
             earliestScannedSubmission: calendar.date(byAdding: .day, value: -700, to: now),
@@ -68,9 +76,9 @@ extension StatsSnapshot {
                 contestId: last.contestId,
                 name: last.contestName,
                 date: last.date,
-                rank: last.rank,
-                oldRating: last.rating - 42,
-                newRating: last.rating
+                rank: 1_287,
+                oldRating: 1_779,
+                newRating: 1_804
             ),
             upcoming: [
                 UpcomingContest(

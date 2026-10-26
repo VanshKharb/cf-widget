@@ -238,7 +238,7 @@ struct Verify {
         let drift = abs(loaded.generatedAt.timeIntervalSince(sample.generatedAt))
         report.check(drift < 1, "generatedAt survives encoding", detail: "drift \(drift)s")
 
-        report.check(SharedStore.snapshot(for: "  Vansh ") != nil, "cache lookup normalises the handle")
+        report.check(SharedStore.snapshot(for: "  \(sample.handle.uppercased()) ") != nil, "cache lookup normalises the handle")
 
         // Cache must stay bounded.
         for index in 0..<10 {
