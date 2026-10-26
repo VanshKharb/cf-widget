@@ -1,0 +1,13 @@
+// Pick your own identity here. Copy this file to Config/Identity.xcconfig
+// (which is gitignored) — or just run:  ./Tools/setup.sh
+//
+// DEVELOPMENT_TEAM  10-character Team ID. In Xcode: Settings > Accounts, or
+//                   look next to your name. Required for running on a device.
+// BUNDLE_PREFIX     Reverse-DNS prefix. Must be unique to you, because two
+//                   people cannot share a bundle identifier.
+// APP_GROUP         Must also be unique, and must start with "group.".
+//                   Two people cannot share an App Group ID.
+
+DEVELOPMENT_TEAM = ABCDE12345
+BUNDLE_PREFIX = com.yourname
+APP_GROUP = group.com.yourname.cfwidget

@@ -1,0 +1,112 @@
+name: CFWidget
+
+options:
+  bundleIdPrefix: com.vanshkharb
+  createIntermediateGroups: true
+  groupSortPosition: top
+  deploymentTarget:
+    iOS: "17.0"
+
+configs:
+  Debug: debug
+  Release: release
+
+# Bundle IDs, App Group and Team ID all come from Config/Identity.xcconfig so
+# that someone else can build this repo without editing any source file.
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    SWIFT_STRICT_CONCURRENCY: minimal
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    CODE_SIGN_STYLE: Automatic
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+
+targets:
+  # ---------------------------------------------------------------------------
+  # The app. Owns the expensive scraping (up to 10k submissions) and writes the
+  # result into the shared App Group so the widget never has to do it.
+  # ---------------------------------------------------------------------------
+  CFWidget:
+    type: application
+    platform: iOS
+    sources:
+      - path: App
+      - path: Shared
+      - path: Assets.xcassets
+    configFiles:
+      Debug: Config/Identity.xcconfig
+      Release: Config/Identity.xcconfig
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_PREFIX).cfwidget
+        PRODUCT_NAME: CFWidget
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        TARGETED_DEVICE_FAMILY: "1,2"
+        SUPPORTS_MACCATALYST: NO
+    info:
+      path: Config/CFWidget-Info.plist
+      properties:
+        CFBundleDisplayName: CF Widget
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        # iPad builds must declare every orientation or Xcode warns.
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        ITSAppUsesNonExemptEncryption: false
+        # Read at runtime by SharedStore, so the Swift code needs no hardcoded ID.
+        AppGroupID: $(APP_GROUP)
+    entitlements:
+      path: Config/CFWidget.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - $(APP_GROUP)
+    dependencies:
+      - target: CFWidgetExtension
+
+  # ---------------------------------------------------------------------------
+  # The widget extension. Three widgets share one timeline provider.
+  # ---------------------------------------------------------------------------
+  CFWidgetExtension:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Widget
+      - path: Shared
+    configFiles:
+      Debug: Config/Identity.xcconfig
+      Release: Config/Identity.xcconfig
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_PREFIX).cfwidget.widget
+        PRODUCT_NAME: CFWidgetExtension
+        APPLICATION_EXTENSION_API_ONLY: YES
+        TARGETED_DEVICE_FAMILY: "1,2"
+        SKIP_INSTALL: YES
+    info:
+      path: Config/CFWidgetExtension-Info.plist
+      properties:
+        CFBundleDisplayName: CF Widget
+        AppGroupID: $(APP_GROUP)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    entitlements:
+      path: Config/CFWidgetExtension.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - $(APP_GROUP)
+
+schemes:
+  CFWidget:
+    build:
+      targets:
+        CFWidget: all
+    run:
+      config: Debug
+    archive:
+      config: Release
