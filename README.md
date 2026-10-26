@@ -7,18 +7,7 @@ rounds with a live countdown.
 Data comes from the **public Codeforces API**, so there is no login, no password
 and no API key. You only need your handle.
 
-```
-┌──────────────────┐  ┌────────────────────────────┐  ┌──────────────────┐
-│ CM            ⟳  │  │ vansh  [expert]        ⟳   │  │ NEXT ROUND       │
-│                  │  │                    ╱╲      │  │ WorldQuant R…    │
-│ 1804             │  │ 1804          ╱╲╱  ╲╱      │  │                  │
-│ Candidate Master │  │ max 2412 · 47 contests     │  │ in 3d 4h         │
-│ ▲ +42            │  │ ────────────────────────── │  │ Nov 2, 20:05     │
-│ ──────────────── │  │ 438 solved  5.5k  🔥 12d   │  └──────────────────┘
-│ 438 solved 🔥12d │  └────────────────────────────┘
-└──────────────────┘
-   CF Stats                     CF Heatmap              CF Contests
-```
+![CF Widget](docs/preview.png)
 
 ## What you get
 
